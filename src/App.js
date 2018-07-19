@@ -26,10 +26,13 @@ class App extends Component {
     const body = document.querySelector('body');
     const iframe = document.createElement('iframe');
     iframe.src = 'http://localhost:3001/services.html';
+    iframe.style.display = 'none';
     body.appendChild(iframe);
+
     this.setState({
       iframe: iframe.contentWindow
     });
+
     window.addEventListener('message', async (e) => {
       if (typeof e.data === 'string') {
         const response = await JSON.parse(e.data);
