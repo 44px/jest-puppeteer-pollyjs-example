@@ -1,0 +1,31 @@
+{
+  "compilerOptions": {
+    "sourceMap": false,
+    "declaration": true,
+    "target": "esnext",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "noEmitOnError": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitAny": false,
+    "noImplicitReturns": true,
+    "removeComments": true,
+    "strictNullChecks": false,
+    "inlineSourceMap": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": false,
+    "outDir": "dist",
+    "rootDir": "test",
+    "skipLibCheck": true,
+    "baseUrl": ".",
+    "lib": [
+      "dom",
+      "es2015"
+    ]
+  },
+  "exclude": [
+    "node_modules",
+    "__test__/**/*.json"
+  ]
+}

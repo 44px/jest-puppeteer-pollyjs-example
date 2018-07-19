@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+  window.addEventListener('message', async (e) => {
+    const data = JSON.parse(e.data);
+    const request = await makeRequest(data.method, data.url, data.data);
+    window.parent.postMessage(request.response, '*');
+  });
+
+  function makeRequest(method, url, body = {}) {
+    return new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.addEventListener('load', function () {
+        resolve(xhr);
+      });
+      xhr.addEventListener('error', reject);
+      xhr.open(method, url, true);
+      xhr.setRequestHeader('Content-Type', 'application/json');
+      xhr.send(JSON.stringify(body));
+    });
+  }
+</script>
+</body>
+</html>
