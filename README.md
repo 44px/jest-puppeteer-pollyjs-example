@@ -4,6 +4,10 @@
 1. Start server with app: `npm start`
 1. Run autotests: `cd autotests && npm test`
 
-localhost:3000 – app
+## Hosts / ports
 
-localhost:3001 – fake backend (via json-server) + serving "services.html" for iframe
+3000 – app & dev-server
+
+3001 – fake backend (via json-server) serving data & "services.html" for iframe
+
+3002 – polly.js server (writing & replaying requests). Starts automatically with tests

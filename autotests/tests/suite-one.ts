@@ -1,41 +1,93 @@
-import {Frame} from "puppeteer";
+import {Frame} from 'puppeteer';
+import PollyServer from '../polly-server';
 
-describe('app', () => {
-    beforeEach(async () => {
-        await page.goto('http://localhost:3000/');
+describe('suite one', () => {
+    let serverInstance = null;
+
+    // Start Polly proxy server
+    beforeAll(() => {
+        serverInstance = PollyServer.listen();
     });
 
-    it('should handle requests', async () => {
-        const frame = page.mainFrame().childFrames()[0] as Frame;
-        frame.addScriptTag({content: `
-            const title = document.querySelector('#frameTitle');
-            title.textContent = 'test';
-        `});
-        const frameTitle = await frame.$eval('#frameTitle', (node) => node.textContent);
-        expect(frameTitle).toBe('test');
+    // Stop Polly proxy server
+    afterAll(() => {
+        serverInstance && serverInstance.close();
+        serverInstance = null;
+    });
 
-        const initialTitle = await page.$eval('#postTitle', (node) => node.textContent);
-        //expect(initialTitle).toBe('–');
+    // Inject Polly client
+    beforeEach(async () => {
+        await page.goto('http://localhost:3000/');
+        const frame = page.mainFrame().childFrames()[0] as Frame;
+        await frame.addScriptTag({
+            url: 'https://unpkg.com/@pollyjs/core@0.5.0/dist/umd/pollyjs-core.js'
+        });
+        await frame.addScriptTag({
+            content: `
+                window.polly = new window['@pollyjs/core'].Polly('NAME_UNSET', {
+                    adapters: ['xhr'],
+                    persisterOptions: {
+                        host: 'http://localhost:3002'
+                    }
+                });
+            `
+        });
+    });
+
+    // Stop recording
+    afterEach(async () => {
+        const frame = page.mainFrame().childFrames()[0] as Frame;
+        // TODO: should somehow to wait for script execution (?)
+        await frame.addScriptTag({
+            content: `
+                window.polly.stop();
+            `
+        });
+        await page.waitFor(200);
+    });
+
+    it('should get initial title', async () => {
+        await setRecordingName(page, 'should get initial title');
+
+        const postTitleAfterLoad = await getTextContent('#postTitle');
+        expect(postTitleAfterLoad).toBe('–');
 
         const fetchButton = await page.$('#fetchData');
         await fetchButton.click();
-
-        // TODO: fn here
-        await page.waitFor(500);
+        await page.waitFor(200);
 
         // Check requested data
-        const requestedTitle = await page.$eval('#postTitle', (node) => node.textContent);
-        //expect(requestedTitle).toBe('OldTitle');
+        const postTitleAfterFetch = await getTextContent('#postTitle');
+        expect(postTitleAfterFetch).toBe('OldTitle');
+    });
+
+    it('should update title', async () => {
+        await setRecordingName(page, 'should update title');
 
         // Update and check data
         const updateButton = await page.$('#updateData');
         await updateButton.click();
-        await page.waitFor(500);
+        await page.waitFor(200);
+
+        const fetchButton = await page.$('#fetchData');
         await fetchButton.click();
-        await page.waitFor(500);
+        await page.waitFor(200);
 
         // check updated data
-        const updatedTitle = await page.$eval('#postTitle', (node) => node.textContent);
-        //expect(updatedTitle).toBe('NewTitle');
+        const postTitle = await getTextContent('#postTitle');
+        expect(postTitle).toBe('NewTitle');
     });
 });
+
+function getTextContent(selector) {
+    return page.$eval(selector, (node) => node.textContent);
+}
+
+async function setRecordingName(page, name) {
+    const frame = page.mainFrame().childFrames()[0] as Frame;
+    return frame.addScriptTag({
+        content: `
+            window.polly.recordingName = '${name}';
+        `
+    });
+}
