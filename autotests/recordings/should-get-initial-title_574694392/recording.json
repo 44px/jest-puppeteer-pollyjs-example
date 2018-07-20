@@ -1,16 +1,16 @@
 {
-  "created_at": "2018-07-19T16:47:50.827Z",
+  "created_at": "2018-07-20T08:57:36.778Z",
   "entries": {
     "cea502cfefc89ca4fbccc5584837327a": [
       {
-        "created_at": "2018-07-19T16:47:50.827Z",
+        "created_at": "2018-07-20T08:57:36.778Z",
         "request": {
           "body": "{}",
           "headers": {
             "Content-Type": "application/json;charset=utf-8"
           },
           "method": "GET",
-          "timestamp": "2018-07-19T16:47:50.627Z",
+          "timestamp": "2018-07-20T08:57:36.578Z",
           "url": "http://localhost:3001/posts/1"
         },
         "response": {
@@ -21,7 +21,7 @@
             "connection": "keep-alive",
             "content-length": "36",
             "content-type": "application/json; charset=utf-8",
-            "date": "Thu, 19 Jul 2018 16",
+            "date": "Fri, 20 Jul 2018 08",
             "etag": "W/\"24-THYEU2a+RTiECQocvPo8UPH/3W8\"",
             "expires": "-1",
             "pragma": "no-cache",
@@ -30,7 +30,7 @@
             "x-powered-by": "Express"
           },
           "status": 200,
-          "timestamp": "2018-07-19T16:47:50.662Z"
+          "timestamp": "2018-07-20T08:57:36.612Z"
         }
       }
     ]

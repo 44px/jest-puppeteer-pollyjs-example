@@ -22,28 +22,22 @@ describe('suite one', () => {
         await frame.addScriptTag({
             url: 'https://unpkg.com/@pollyjs/core@0.5.0/dist/umd/pollyjs-core.js'
         });
-        await frame.addScriptTag({
-            content: `
-                window.polly = new window['@pollyjs/core'].Polly('NAME_UNSET', {
-                    adapters: ['xhr'],
-                    persisterOptions: {
-                        host: 'http://localhost:3002'
-                    }
-                });
-            `
+        await frame.evaluate(() => {
+            window['polly'] = new window['@pollyjs/core'].Polly('NAME_UNSET', {
+                adapters: ['xhr'],
+                persisterOptions: {
+                    host: 'http://localhost:3002'
+                }
+            });
         });
     });
 
     // Stop recording
     afterEach(async () => {
         const frame = page.mainFrame().childFrames()[0] as Frame;
-        // TODO: should somehow to wait for script execution (?)
-        await frame.addScriptTag({
-            content: `
-                window.polly.stop();
-            `
+        await frame.evaluate(() => {
+            return window['polly'].stop();
         });
-        await page.waitFor(200);
     });
 
     it('should get initial title', async () => {
@@ -85,9 +79,7 @@ function getTextContent(selector) {
 
 async function setRecordingName(page, name) {
     const frame = page.mainFrame().childFrames()[0] as Frame;
-    return frame.addScriptTag({
-        content: `
-            window.polly.recordingName = '${name}';
-        `
-    });
+    await frame.evaluate((recordingName) => {
+        window['polly'].recordingName = recordingName;
+    }, name);
 }

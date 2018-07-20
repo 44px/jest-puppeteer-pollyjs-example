@@ -1,16 +1,16 @@
 {
-  "created_at": "2018-07-19T16:47:51.748Z",
+  "created_at": "2018-07-20T08:57:37.418Z",
   "entries": {
     "18e7dfbbdecd01887a529da5c5fb46c8": [
       {
-        "created_at": "2018-07-19T16:47:51.748Z",
+        "created_at": "2018-07-20T08:57:37.418Z",
         "request": {
           "body": "{\"title\":\"NewTitle\"}",
           "headers": {
             "Content-Type": "application/json;charset=utf-8"
           },
           "method": "PUT",
-          "timestamp": "2018-07-19T16:47:51.334Z",
+          "timestamp": "2018-07-20T08:57:37.001Z",
           "url": "http://localhost:3001/posts/1"
         },
         "response": {
@@ -22,7 +22,7 @@
             "connection": "keep-alive",
             "content-length": "36",
             "content-type": "application/json; charset=utf-8",
-            "date": "Thu, 19 Jul 2018 16",
+            "date": "Fri, 20 Jul 2018 08",
             "etag": "W/\"24-SAEdZzGG07/sUtPYpYWPmCWK5Bw\"",
             "expires": "-1",
             "pragma": "no-cache",
@@ -31,20 +31,20 @@
             "x-powered-by": "Express"
           },
           "status": 200,
-          "timestamp": "2018-07-19T16:47:51.402Z"
+          "timestamp": "2018-07-20T08:57:37.043Z"
         }
       }
     ],
     "cea502cfefc89ca4fbccc5584837327a": [
       {
-        "created_at": "2018-07-19T16:47:51.748Z",
+        "created_at": "2018-07-20T08:57:37.418Z",
         "request": {
           "body": "{}",
           "headers": {
             "Content-Type": "application/json;charset=utf-8"
           },
           "method": "GET",
-          "timestamp": "2018-07-19T16:47:51.544Z",
+          "timestamp": "2018-07-20T08:57:37.211Z",
           "url": "http://localhost:3001/posts/1"
         },
         "response": {
@@ -55,7 +55,7 @@
             "connection": "keep-alive",
             "content-length": "36",
             "content-type": "application/json; charset=utf-8",
-            "date": "Thu, 19 Jul 2018 16",
+            "date": "Fri, 20 Jul 2018 08",
             "etag": "W/\"24-SAEdZzGG07/sUtPYpYWPmCWK5Bw\"",
             "expires": "-1",
             "pragma": "no-cache",
@@ -64,7 +64,7 @@
             "x-powered-by": "Express"
           },
           "status": 200,
-          "timestamp": "2018-07-19T16:47:51.560Z"
+          "timestamp": "2018-07-20T08:57:37.222Z"
         }
       }
     ]
